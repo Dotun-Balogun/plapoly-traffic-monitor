@@ -1,0 +1,19 @@
+# Optional "Blueprint". You can instead create the service by hand in the Render
+# dashboard (README, Part 3) using the same build and start commands.
+services:
+  - type: web
+    name: traffic-monitor
+    runtime: python
+    # Free and Starter both have only 512 MB RAM, which is probably too little for
+    # PyTorch + video. Standard (2 GB) is the first plan with real headroom.
+    plan: free
+    buildCommand: >-
+      pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+      && pip install -r requirements.txt
+      && pip uninstall -y opencv-python
+      && pip install --force-reinstall --no-deps opencv-python-headless
+    startCommand: python main.py
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

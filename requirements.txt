@@ -1,0 +1,5 @@
+# Install PyTorch (CPU build) BEFORE this file. See README step 3. It is not listed
+# here on purpose: a plain `pip install torch` downloads the huge GPU build.
+nicegui>=3.0,<4
+ultralytics
+opencv-python-headless
